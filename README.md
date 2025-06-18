@@ -2,7 +2,7 @@
 
 A simple password manager written in app written in c# with wpf.
 
-This project demonstrates how dependency injection can be used to simplify construction of complex objects, and how asynchronous programming can preventlocking up the UI while working on an intensive task.
+This project demonstrates how dependency injection can be used to simplify construction of complex objects, and how asynchronous programming can prevent locking up the UI while working on an intensive task.
 
 ## Features
 
