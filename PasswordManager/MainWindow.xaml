@@ -1,0 +1,129 @@
+﻿<Window x:Class="PasswordManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PasswordManager"
+        mc:Ignorable="d"
+        Title="{Binding MainWindowLocalisation}" Height="380" Width="540" MinHeight="330" MinWidth="420">
+
+    <Window.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
+    
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Master password and login button-->
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Label Content="{Binding MasterPasswordLocalisation}"/>
+
+                <TextBox Width="240"
+                         Text="{Binding MasterPassword, Mode=TwoWay}"
+                         IsEnabled="{Binding IsLoggedIn, Converter={StaticResource InverseBooleanConverter}}"/>
+
+                <Button Width="60"
+                        Margin="5"
+                        Content="{Binding LoginButtonBinding}"
+                        Command="{Binding LoginCommand}"/>
+            </StackPanel>
+
+
+            <Grid Grid.Row="1"
+                  IsEnabled="{Binding IsLoggedIn}">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Save Changes and Revert Changes buttons-->
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal">
+                    
+                    <Button Width="90"
+                            Margin="5"
+                            Content="{Binding SaveChangesLocalisation}"
+                            Command="{Binding SaveChangesCommand}"/>
+                    
+                    <Button Width="90"
+                            Margin="5"
+                            Content="{Binding RevertChangesLocalisation}"
+                            Command="{Binding RevertChangesCommand}"/>
+                    
+                </StackPanel>
+
+                <!--Password selection list-->
+                <ListView Grid.Column="0"
+                          Grid.Row="1"
+                          ItemsSource="{Binding Passwords}"
+                          SelectedItem="{Binding SelectedPassword, Mode=TwoWay}"
+                          IsEnabled="{Binding IsLoggedIn}">
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--Selected paassword details-->
+                <StackPanel Grid.Column="1"
+                            Grid.Row="1"
+                            Margin="10"
+                            DataContext="{Binding SelectedPassword}">
+
+                    <Label Content="{Binding DataContext.NameLocalisation, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <TextBox Text="{Binding Name, Mode=TwoWay}" />
+
+                    <Label Margin="0,10,0,0"
+                           Content="{Binding DataContext.LoginLocalisation, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <TextBox Text="{Binding Login, Mode=TwoWay}" />
+
+                    <Label Margin="0,10,0,0"
+                           Content="{Binding DataContext.PasswordLocalisation, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <TextBox Text="{Binding Password, Mode=TwoWay}" />
+
+                    <Button Width="60"
+                            HorizontalAlignment="Left"
+                            Margin="5"
+                            Content="{Binding DataContext.CopyLocalisation, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    
+                </StackPanel>
+
+                <!--New and Delete buttons-->
+                <StackPanel Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+
+                    <Button Width="90"
+                            Margin="5"
+                            Content="{Binding NewButtonLocalisation}"
+                            Command="{Binding NewCommand}"/>
+
+                    <Button Width="90"
+                            Margin="5"
+                            Content="{Binding DeleteButtonLocalisation}"
+                            Command="{Binding DeleteCommand}"/>
+
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
