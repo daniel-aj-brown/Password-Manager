@@ -55,19 +55,20 @@
                     
                     <Button Width="90"
                             Margin="5"
-                            Content="{Binding SaveChangesLocalisation}"
-                            Command="{Binding SaveChangesCommand}"/>
+                            Content="{Binding NewButtonLocalisation}"
+                            Command="{Binding NewCommand}"/>
                     
                     <Button Width="90"
                             Margin="5"
-                            Content="{Binding RevertChangesLocalisation}"
-                            Command="{Binding RevertChangesCommand}"/>
+                            Content="{Binding DeleteButtonLocalisation}"
+                            Command="{Binding DeleteCommand}"/>
                     
                 </StackPanel>
 
                 <!--Password selection list-->
                 <ListView Grid.Column="0"
                           Grid.Row="1"
+                          SelectionMode="Single"
                           ItemsSource="{Binding Passwords}"
                           SelectedItem="{Binding SelectedPassword, Mode=TwoWay}"
                           IsEnabled="{Binding IsLoggedIn}">
@@ -80,11 +81,12 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <!--Selected paassword details-->
+                <!--Selected password details-->
                 <StackPanel Grid.Column="1"
                             Grid.Row="1"
                             Margin="10"
-                            DataContext="{Binding SelectedPassword}">
+                            DataContext="{Binding SelectedPassword}"
+                            IsEnabled="{Binding DataContext.IsSelectedPasswordValid, RelativeSource={RelativeSource AncestorType=Window}}">
 
                     <Label Content="{Binding DataContext.NameLocalisation, RelativeSource={RelativeSource AncestorType=Window}}"/>
                     <TextBox Text="{Binding Name, Mode=TwoWay}" />
@@ -113,13 +115,13 @@
 
                     <Button Width="90"
                             Margin="5"
-                            Content="{Binding NewButtonLocalisation}"
-                            Command="{Binding NewCommand}"/>
+                            Content="{Binding SaveChangesLocalisation}"
+                            Command="{Binding SaveChangesCommand}"/>
 
                     <Button Width="90"
                             Margin="5"
-                            Content="{Binding DeleteButtonLocalisation}"
-                            Command="{Binding DeleteCommand}"/>
+                            Content="{Binding RevertChangesLocalisation}"
+                            Command="{Binding RevertChangesCommand}"/>
 
                 </StackPanel>
 

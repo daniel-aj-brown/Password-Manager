@@ -31,7 +31,14 @@ namespace PasswordManager
         public IPasswordModel SelectedPassword
         {
             get { return selectedPassword; }
-            set { SetProperty(ref selectedPassword, value); }
+            set
+            {
+                if (SetProperty(ref selectedPassword, value))
+                {
+                    RaisePropertyChanged(nameof(IsSelectedPasswordValid));
+                }
+            }
+
         }
 
         public string MasterPassword
@@ -57,6 +64,14 @@ namespace PasswordManager
             get
             {
                 return IsLoggedIn ? "Logout": LoginLocalisation;
+            }
+        }
+
+        public bool IsSelectedPasswordValid
+        {
+            get
+            {
+                return SelectedPassword != null;
             }
         }
 
